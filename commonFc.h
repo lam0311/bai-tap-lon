@@ -35,6 +35,8 @@ static SDL_Texture* sprite_goblin_attackright[7];
 static SDL_Texture* sprite_goblin_attackleft[7];
 static SDL_Texture* sprite_goblin_hit_right[4];
 static SDL_Texture* sprite_goblin_hit_left[4];
+static SDL_Texture* sprite_goblin_died_right[4];
+static SDL_Texture* sprite_goblin_died_left[4];
 
 
 // bien hang
@@ -46,4 +48,4 @@ const int KEY_G = 175;
 const int KEY_B = 180;
 const int tile_block = 64;
 const int MAX_ROWS = 12;
-const int MAX_COLS = 400;
+const int MAX_COLS = 460;
