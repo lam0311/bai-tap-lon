@@ -56,9 +56,16 @@ bool base::loadimg(const char* path, SDL_Renderer* render, int w, int h) {
 
 
 
-void base::positionimg(SDL_Renderer* render, SDL_Rect* clip) {
-	SDL_Rect rectps = { rect.x,rect.y,rect.w,rect.h };
-	SDL_RenderCopy(render, base_oj, clip, &rectps);
+void base::positionimg(SDL_Renderer* render, int set) {
+	/*SDL_Rect rectps = { rect.x,rect.y,rect.w,rect.h };
+	SDL_RenderCopy(render, base_oj, clip, &rectps);*/
+
+	SDL_Rect rec1 = { set,0,window_w,window_h };
+	SDL_RenderCopy(render, base_oj, NULL, &rec1);
+	if (set < 800) {
+		SDL_Rect rec2 = { set + window_w,0,window_w,window_h };
+		SDL_RenderCopy(render, base_oj, NULL, &rec2);
+	}
 }
 
 
