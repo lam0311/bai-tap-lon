@@ -18,23 +18,28 @@ struct player {
 	bool player_hit;
 	Uint32 player_hit_start;
 	int player_frame_hit;
-
+	bool player_died;
+	int frame_effect_apple;
+	Uint32 time_apple;
 
 	player() {
-		player_x = 15;
-		player_y = 15;
+		player_x = PLAYER_START_X;
+		player_y = PLAYER_START_Y;
 		player_w = 70;
 		player_h = 63;
 		picture_w = 0;
 		picture_h = 0;
 		x_val = 0;
 		y_val = 0;
-		player_heath = 12;
+		player_heath = PLAYER_MAX_HEALTH;
 		on_ground = false;
 		attack_corec = false;
 		player_hit = false;
 		player_hit_start = 0;
 		player_frame_hit = 0;
+		player_died = false;
+		int frame_effect_apple = 0;
+		time_apple = 0;
 
 	}
 
@@ -60,6 +65,8 @@ struct player {
 	bool spriterun(SDL_Renderer* render);
 	void aminationrunright(int fame, SDL_Renderer* render, camera cam);
 	void aminationrunleft(int fame, SDL_Renderer* render, camera cam);
+	void Effect_apple_player(SDL_Renderer* render, camera cam);
+	void Effect_apple2_player(SDL_Renderer* render, camera cam);
 
 
 	void jump();
@@ -86,7 +93,10 @@ struct camera {
 		camera_h = window_h;
 	}
 
+
 	void updateCamera(player x);
+
+	void resetcam();
 };
 
 
