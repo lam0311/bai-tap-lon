@@ -24,6 +24,9 @@ static SDL_Texture* sprite_attackright[10];
 static SDL_Texture* sprite_attackleft[10];
 static SDL_Texture* sprite_hit_right[4];
 static SDL_Texture* sprite_hit_left[4];
+static SDL_Texture* support_player[10];
+static SDL_Texture* effect_apple[3];
+static SDL_Texture* effect_apple2[4];
 
 
 
@@ -37,6 +40,7 @@ static SDL_Texture* sprite_goblin_hit_right[4];
 static SDL_Texture* sprite_goblin_hit_left[4];
 static SDL_Texture* sprite_goblin_died_right[4];
 static SDL_Texture* sprite_goblin_died_left[4];
+static SDL_Texture* goblin_index_health = NULL;
 
 
 // bien hang
@@ -49,3 +53,9 @@ const int KEY_B = 180;
 const int tile_block = 64;
 const int MAX_ROWS = 12;
 const int MAX_COLS = 460;
+
+const int PLAYER_START_X = 15;
+const int PLAYER_START_Y = 15;
+const int PLAYER_MAX_HEALTH = 12;
+
+
