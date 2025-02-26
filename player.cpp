@@ -19,6 +19,36 @@ void player::aminationrunleft(int frame, SDL_Renderer* render, camera cam) {
 }
 
 
+void player::Effect_apple_player(SDL_Renderer* render, camera cam) {
+    Uint32 curent = SDL_GetTicks();
+    if (curent - time_apple >= 100) {
+        frame_effect_apple = (frame_effect_apple + 1) % 3;
+        time_apple = SDL_GetTicks();
+    }
+
+
+    SDL_Rect rect = { player_x - cam.camera_x - 15,player_y - cam.camera_y - 50,player_w + 40,player_h + 60 };
+    SDL_RenderCopy(render, effect_apple[frame_effect_apple], NULL, &rect);
+
+}
+
+
+void player::Effect_apple2_player(SDL_Renderer* render, camera cam) {
+    Uint32 curent = SDL_GetTicks();
+    if (curent - time_apple >= 100) {
+        frame_effect_apple = (frame_effect_apple + 1) % 4;
+        time_apple = SDL_GetTicks();
+    }
+
+
+    SDL_Rect rect = { player_x - cam.camera_x + 20,player_y - cam.camera_y - 55,50,50 };
+    SDL_RenderCopy(render, effect_apple2[frame_effect_apple], NULL, &rect);
+
+
+
+}
+
+
 
 SDL_Texture* player::Loadsprite(const char* path, SDL_Renderer* render) {
     int n = IMG_INIT_PNG;
@@ -69,6 +99,28 @@ bool player::spriterun(SDL_Renderer* render) {
             return 0;
         }
     }
+
+    for (int i = 0; i < 3; i++) {
+        sprintf_s(path_, "picture/Blue Effect Bullet%d.png", i);
+        effect_apple[i] = Loadsprite(path_, render);
+        if (!effect_apple[i]) {
+            cout << SDL_GetError();
+            return 0;
+        }
+    }
+
+    for (int i = 0; i < 4; i++) {
+        sprintf_s(path_, "picture/Blue Effect_two%d.png", i);
+        effect_apple2[i] = Loadsprite(path_, render);
+        if (!effect_apple2[i]) {
+            cout << SDL_GetError();
+            return 0;
+        }
+    }
+
+
+
+
     return 1;
 }
 
@@ -115,7 +167,7 @@ void player::checkvar(const int tile_map[MAX_ROWS][MAX_COLS]) {
 
     if (x1 >= 0 && x2 < MAX_COLS && y1 >= 0 && y2 < MAX_ROWS) {
         if (x_val > 0) {
-            if (tile_map[y1][x2] != 0 || tile_map[y2][x2] != 0) {
+            if ((tile_map[y1][x2] != 0 || tile_map[y2][x2] != 0) && (tile_map[y1][x2] != 3 || tile_map[y2][x2] != 3)) {
                 player_x = x2 * tile_block - player_w;
                 x_val = 0;
             }
@@ -124,7 +176,7 @@ void player::checkvar(const int tile_map[MAX_ROWS][MAX_COLS]) {
             }
         }
         else if (x_val < 0) {
-            if (tile_map[y1][x1] != 0 || tile_map[y2][x1] != 0) {
+            if ((tile_map[y1][x1] != 0 || tile_map[y2][x1] != 0) && (tile_map[y1][x1] != 3 || tile_map[y2][x1] != 3)) {
                 player_x = (x1 + 1) * tile_block;
                 x_val = 0;
             }
@@ -143,7 +195,7 @@ void player::checkvar(const int tile_map[MAX_ROWS][MAX_COLS]) {
 
     if (x1 >= 0 && x2 < MAX_COLS && y1 >= 0 && y2 < MAX_ROWS) {
         if (y_val > 0) {
-            if (tile_map[y2][x1] != 0 || tile_map[y2][x2] != 0) {
+            if ((tile_map[y2][x1] != 0 || tile_map[y2][x2] != 0) && (tile_map[y2][x1] != 3 || tile_map[y2][x2] != 3)) {
                 player_y = y2 * tile_block - player_h;
                 y_val = 0;
                 on_ground = true;
@@ -153,7 +205,7 @@ void player::checkvar(const int tile_map[MAX_ROWS][MAX_COLS]) {
             }
         }
         else if (y_val < 0) {
-            if (tile_map[y1][x1] != 0 || tile_map[y1][x2] != 0) {
+            if ((tile_map[y1][x1] != 0 || tile_map[y1][x2] != 0) && (tile_map[y1][x1] != 3 || tile_map[y1][x2] != 3)) {
                 player_y = (y1 + 1) * tile_block;
                 y_val = 0;
             }
@@ -170,8 +222,9 @@ void player::checkvar(const int tile_map[MAX_ROWS][MAX_COLS]) {
 
     if (player_y < 0) player_y = 0;
     else if (player_y + player_h > MAX_ROWS * tile_block) {
-        player_y = 0;
         player_x -= 150;
+        player_y = 0;
+        player_heath--;
         SDL_Delay(250);
     }
 }
@@ -181,5 +234,10 @@ void player::jump() {
         y_val = -9;
         on_ground = false;
     }
+}
+
+void camera::resetcam() {
+    camera_x = 0;
+    camera_y = 0;
 }
 
