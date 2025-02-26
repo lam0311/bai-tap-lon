@@ -55,6 +55,7 @@ public:
 	void sprite_enemy_goblin_hurt_right(int frame, SDL_Renderer* render, camera& cam);
 	void sprite_enemy_goblin_died_right(int frame, SDL_Renderer* render, camera& cam);
 	void sprite_enemy_goblin_died_left(int frame, SDL_Renderer* render, camera& cam);
+	void enemy_goblin_health(SDL_Renderer* render, camera& cam);
 
 
 
