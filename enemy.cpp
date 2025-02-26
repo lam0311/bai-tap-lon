@@ -166,6 +166,11 @@ bool enemy::amination_enemy_goblin(SDL_Renderer* render) {
             return false;
         }
     }
+    goblin_index_health = load_enemy("picture/thanh mau.png", render);
+    if (!goblin_index_health) {
+        cout << SDL_GetError();
+        return false;
+    }
 
 
 
@@ -259,6 +264,13 @@ void enemy::sprite_enemy_goblin_died_right(int frame, SDL_Renderer* render, came
     }
     SDL_Rect rect = { enemy_x - cam.camera_x , enemy_y - cam.camera_y + m,70, 63 };
     SDL_RenderCopy(render, sprite_goblin_died_right[frame], NULL, &rect);
+}
+
+
+
+void enemy::enemy_goblin_health(SDL_Renderer* render, camera& cam) {
+    SDL_Rect rect = { enemy_x - cam.camera_x , enemy_y - cam.camera_y - 27,25 * goblin_heath, 40 };
+    SDL_RenderCopy(render, goblin_index_health, NULL, &rect);
 }
 
 
